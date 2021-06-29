@@ -1,17 +1,43 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+class MyForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { url: '', text: '' };
+  }
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+  processText(result) {
+    let a = new DOMParser().parseFromString(result, 'text/html').documentElement
+      .textContent;
+    return a;
+  }
+
+  mySubmitHandler = event => {
+    event.preventDefault();
+    let parsed_text = fetch(this.state.url)
+      .then(res => res.text())
+      .then(rtext => this.processText(rtext))
+      .then(ptext => this.setState({ text: ptext }));
+  };
+
+  myChangeHandler = event => {
+    this.setState({ url: event.target.value });
+  };
+  render() {
+    return (
+      <>
+        <form onSubmit={this.mySubmitHandler}>
+          <h1>Display webpage</h1>
+          <p>Enter the url, and submit:</p>
+          <input type="text" onChange={this.myChangeHandler} />
+          <input type="submit" value="click me" />
+        </form>
+        <div>the text is<p/> this.text </div>
+       {this.state.text} 
+        
+      </>
+    );
+  }
+}
+ReactDOM.render(<MyForm />, document.getElementById('root'));
