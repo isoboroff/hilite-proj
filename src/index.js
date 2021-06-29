@@ -15,8 +15,9 @@ class MyForm extends React.Component {
 
   mySubmitHandler = event => {
     event.preventDefault();
-    let parsed_text = fetch(this.state.url)
+    fetch(this.state.url)
       .then(res => res.text())
+      .then(text => { console.log(text); return text })
       .then(rtext => this.processText(rtext))
       .then(ptext => this.setState({ text: ptext }));
   };
@@ -33,6 +34,7 @@ class MyForm extends React.Component {
           <input type="text" onChange={this.myChangeHandler} />
           <input type="submit" value="click me" />
         </form>
+        <div>the url is {this.state.url}</div>
         <div>the text is<p/> this.text </div>
        {this.state.text} 
         
