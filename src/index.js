@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import JSSoup from 'jssoup';
 
 class MyForm extends React.Component {
   constructor(props) {
@@ -13,13 +14,25 @@ class MyForm extends React.Component {
     return a;
   }
 
-  mySubmitHandler = event => {
+  stripHtml(html)
+  {
+    return new JSSoup(html, false );
+}
+
+  mySubmitHandler = event => 
+  {
     event.preventDefault();
-    let parsed_text = fetch(this.state.url)
+    fetch(this.state.url, {
+      
+    })
       .then(res => res.text())
+      .then(res2=>this.stripHtml(res2))
+      .then(text => { console.log(text); return text })
       .then(rtext => this.processText(rtext))
       .then(ptext => this.setState({ text: ptext }));
   };
+
+  
 
   myChangeHandler = event => {
     this.setState({ url: event.target.value });
@@ -33,6 +46,7 @@ class MyForm extends React.Component {
           <input type="text" onChange={this.myChangeHandler} />
           <input type="submit" value="click me" />
         </form>
+        <div>the url is {this.state.url}</div>
         <div>the text is<p/> this.text </div>
        {this.state.text} 
         
