@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import JSSoup from 'jssoup';
 
+
 class MyForm extends React.Component {
   constructor(props) {
     super(props);
@@ -16,7 +17,10 @@ class MyForm extends React.Component {
 
   stripHtml(html)
   {
-    return new JSSoup(html, false );
+    var soup = new JSSoup(html);
+    let content_arr=soup.find('div', 'Article').strings;
+    console.log(content_arr)
+    return content_arr;
 }
 
   mySubmitHandler = event => 
