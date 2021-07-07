@@ -17,11 +17,15 @@ class MyForm extends React.Component {
 
   stripHtml(html)
   {
-    var soup = new JSSoup(html);
-    let content_arr=soup.find('div', 'Article').strings;
-    console.log(content_arr)
-    return content_arr;
-}
+    let soup = new JSSoup(html);
+    let the_div = soup.find('div', 'Article');
+    console.log(the_div);
+    if (the_div) {
+      return the_div.getText();
+    } else {
+      return '... none ...';
+    }
+  }
 
   mySubmitHandler = event => 
   {
@@ -32,7 +36,6 @@ class MyForm extends React.Component {
       .then(res => res.text())
       .then(res2=>this.stripHtml(res2))
       .then(text => { console.log(text); return text })
-      .then(rtext => this.processText(rtext))
       .then(ptext => this.setState({ text: ptext }));
   };
 
