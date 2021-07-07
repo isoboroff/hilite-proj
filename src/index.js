@@ -51,7 +51,11 @@ class MyForm extends React.Component {
           <h1>Display webpage</h1>
           <p>Enter the url, and submit:</p>
           <input type="text" onChange={this.myChangeHandler} />
-          <input type="submit" value="click me" />
+          <input type="submit" value="submit html" />
+          <input type="text" name="searchBar" id="searchBar" placeholder="search for a word"/>
+          <input id="changeColor" type="button" value="Highlight"/>
+          <input id="clear" type="button" value="Clear"/>
+
         </form>
         <div>the url is {this.state.url}</div>
         <div>the text is<p/> this.text </div>
