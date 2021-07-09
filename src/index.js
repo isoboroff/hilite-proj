@@ -6,18 +6,22 @@ class HighlightArticle extends React.Component {
   /* this.props.content: the text for highlighting */
   constructor(props) {
     super(props);
-    this.state = { hilite_start: 0, hilite_end: 0 };
+    this.state = { hilite_start: 0, 
+                   hilite_end: 0,
+                   content: this.props.content;
+                 };
   }
 
 
-Highlight= () => 
+Highlight() 
 {
-    var mainElement = document.querySelector(".Article");
+    /* var mainElement = document.querySelector(".Article"); /* get the content */
+    const mainElement = this.state.content;
     let selection=window.getSelection().toString();
     var regex=RegExp(selection, 'g')
     var replacement = '<b>'+ selection+'</b>';
-    var newHTML = mainElement.textContent.replace(regex, replacement);
-    mainElement.innerHTML=newHTML;
+    var newHTML = mainElement.replace(regex, replacement);
+    this.setState({content: mainElement});
 
 
   };
@@ -26,7 +30,7 @@ Highlight= () =>
     return (
       <div>
         <form highlight={this.Highlight}></form>
-        {this.props.content}
+        {this.state.content}
       </div>
     );
   }
