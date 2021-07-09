@@ -9,18 +9,23 @@ class HighlightArticle extends React.Component {
     this.state = { hilite_start: 0, hilite_end: 0 };
   }
 
-  doSomething() {}
 
-Highlight= () => {
+Highlight= () => 
+{
+    var mainElement = document.querySelector(".Article");
     let selection=window.getSelection().toString();
-    var regex=RegExp(selection, 'gi')
+    var regex=RegExp(selection, 'g')
     var replacement = '<b>'+ selection+'</b>';
-    
+    var newHTML = mainElement.textContent.replace(regex, replacement);
+    mainElement.innerHTML=newHTML;
+
+
   };
   
   render() {
     return (
       <div>
+        <form highlight={this.Highlight}></form>
         {this.props.content}
       </div>
     );
@@ -76,7 +81,6 @@ class MyForm extends React.Component {
           <p>Enter the url, and submit:</p>
           <input type="text" onChange={this.myChangeHandler} />
           <input type="submit" value="submit html" />
-          <input type="text" name="searchBar" id="searchBar" placeholder="search for a word"/>
           <input id="changeColor" type="button" value="Highlight"/>
           <input id="clear" type="button" value="Clear"/>
 
