@@ -28,8 +28,7 @@ Highlight()
   
   render() {
     return (
-      <div>
-        <form highlight={this.Highlight}></form>
+      <div onMouseUp={if (not empty) {this.Highlight()}}>
         {this.state.content}
       </div>
     );
