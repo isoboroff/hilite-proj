@@ -8,7 +8,7 @@ class HighlightArticle extends React.Component {
     super(props);
     this.state = { hilite_start: 0, 
                    hilite_end: 0,
-                   content: this.props.content;
+                   content: this.props.content,
                  };
   }
 
@@ -25,14 +25,30 @@ Highlight()
 
 
   };
-  
-  render() {
-    return (
-      <div onMouseUp={if (not empty) {this.Highlight()}}>
-        {this.state.content}
+
+  has_selection() 
+  {
+    return (window.getSelection && !window.getSelection().isCollapsed);
+  }
+
+  render() 
+  {
+    return 
+    (
+      <div>
+      if (this.has_selection()) 
+      {
+        <div onMouseUp={this.Highlight()}/>
+      } 
+      else
+      {
+        this.state.content
+      }
       </div>
     );
   }
+
+
 };
 
 class MyForm extends React.Component {
