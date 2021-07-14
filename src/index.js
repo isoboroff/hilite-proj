@@ -99,7 +99,7 @@ class MyForm extends React.Component {
     this.setState({ url: event.target.value });
   };
   render() {
-    
+    //<HighlightArticle content={this.state.text} />
 
           
 
@@ -116,7 +116,7 @@ class MyForm extends React.Component {
         <div>the url is {this.state.url}</div>
         <div>the text is<p/> this.text </div>
         {console.log(this.state.text)}
-        <HighlightArticle content={this.state.text} />
+        <HighlightArticle content= {new HighlightArticle(this.state.text)} />
         
         
       </>
