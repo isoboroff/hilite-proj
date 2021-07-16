@@ -22,7 +22,16 @@ Highlight()
 {
   console.log("inside highlight")
   if(this.state.selection !== '')
-    {
+  {
+    /*
+    return (<>
+              bit before the highlight
+              <b> the highlight </b>
+              bit after the highlight
+            </>
+    )
+    */
+    
       console.log('if');
       const mainElement = this.props.content;
       //console.log(mainElement)
