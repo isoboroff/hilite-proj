@@ -2,23 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import JSSoup from 'jssoup';
 
-class HighlightArticle extends React.Component {
-  /* this.props.content: the text for highlighting */
-  constructor(props) {
-    super(props);
-    this.state = { hilite_start: 0, hilite_end: 0 };
-  }
-
-  doSomething() {}
-  
-  render() {
-    return (
-      <div>
-        {this.props.content}
-      </div>
-    );
-  }
-};
 
 class HighlightArticle extends React.Component 
 {
@@ -140,10 +123,10 @@ class MyForm extends React.Component {
         {this.state.text}
         <HighlightArticle content= {new HighlightArticle(this.state.text)} />
         
-
         
       </>
     );
   }
 }
 ReactDOM.render(<MyForm />, document.getElementById('root'));
+
