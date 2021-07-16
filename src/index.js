@@ -12,7 +12,7 @@ class HighlightArticle extends React.Component
                    hilite_end: 0,
                    content: this.props.content,
                  };
-    console.log("In Constructor")
+    //console.log("In Constructor")
     console.log(this.props)
   }
 
@@ -22,14 +22,17 @@ Highlight()
   console.log("inside highlight")
     if(this.has_selection)
     {
-    const mainElement = this.state.content;
-    console.log(mainElement)
+    //const mainElement = this.state.content;
+    //console.log(mainElement)
     let selection=window.getSelection().toString();
-    var regex=RegExp(selection, 'g')
+    console.log(selection);
+    //var regex=RegExp(selection, 'g')
     var replacement = '<b>'+ selection+'</b>';
-    var newHTML = mainElement.replace(regex, replacement);
-    this.setState({content: newHTML});
-    console.log("inside of if")
+    console.log(replacement);
+    return replacement;
+    //var newHTML = mainElement.replace(regex, replacement);
+    //this.setState({content: newHTML});
+    //console.log("inside of if")
     }
     console.log("outside of if")
   };
@@ -48,10 +51,12 @@ Highlight()
     //console.log({this.state.content})
       //<div onMouseUp={(e)=>{this.Highlight()}}>
       //</div>
-
+      
     return(
-      <div onMouseUp={(e)=>{this.Highlight()}}>
-       {this.state.content}
+      
+      <div onMouseUp={
+        (e)=>{console.log(this.Highlight())}}>
+       {console.log("render")}
       </div>
     );
   }
@@ -115,7 +120,7 @@ class MyForm extends React.Component {
         </form>
         <div>the url is {this.state.url}</div>
         <div>the text is<p/> this.text </div>
-        {console.log(this.state.text)}
+        {this.state.text}
         <HighlightArticle content= {new HighlightArticle(this.state.text)} />
         
         
