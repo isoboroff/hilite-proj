@@ -5,38 +5,50 @@ import JSSoup from 'jssoup';
 
 class HighlightArticle extends React.Component 
 {
-  /* this.props.content: the text for highlighting */
+
   constructor(props) {
     super(props);
-    this.state = { hilite_start: 0, 
-                   hilite_end: 0,
-                   content: this.props.content,
-                 };
-    //console.log("In Constructor")
-    console.log(this.props)
+    this.state = { selection: '' }
   }
+/*
+ * 1. props has the content.
+ * 2. function highlight applies the highlighting if we have any
+ * 3. if the user makes a selection, update the highlighting
+ * 4. use function highlight in render.
+ */
 
-
+  
 Highlight() 
 {
   console.log("inside highlight")
-    if(this.has_selection)
+  if(this.state.selection !== '')
     {
-    //const mainElement = this.state.content;
-    //console.log(mainElement)
-    let selection=window.getSelection().toString();
-    console.log(selection);
-    //var regex=RegExp(selection, 'g')
-    var replacement = '<b>'+ selection+'</b>';
-    console.log(replacement);
-    return replacement;
-    //var newHTML = mainElement.replace(regex, replacement);
-    //this.setState({content: newHTML});
-    //console.log("inside of if")
-    }
-    console.log("outside of if")
-  };
+      console.log('if');
+      const mainElement = this.props.content;
+      //console.log(mainElement)
+      const selection= this.state.selection;
+      console.log(selection);
+      const regex=RegExp(selection, 'g')
+      const replacement = '<b>'+ selection+'</b>';
+      console.log(replacement);
 
+      const newHTML = mainElement.replace(regex, replacement);
+      return newHTML;
+      
+    } else {
+      console.log('else');
+      return this.props.content;
+    }
+};
+
+  handle_selection() {
+    if (this.has_selection()) {
+      this.setState({ selection: window.getSelection() })
+    }
+    else {
+      this.setState({ selection: ''});
+    }
+  }
 
   
   has_selection() 
@@ -48,15 +60,10 @@ Highlight()
 
   render() 
   {
-    //console.log({this.state.content})
-      //<div onMouseUp={(e)=>{this.Highlight()}}>
-      //</div>
-      
     return(
       
-      <div onMouseUp={
-        (e)=>{console.log(this.Highlight())}}>
-       {console.log("render")}
+      <div onMouseUp={(e) => this.handle_selection() }>
+        { this.Highlight(this.props.content) }
       </div>
     );
   }
@@ -66,12 +73,6 @@ class MyForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = { url: '', text: '' };
-  }
-
-  processText(result) {
-    let a = new DOMParser().parseFromString(result, 'text/html').documentElement
-      .textContent;
-    return a;
   }
 
   stripHtml(html)
@@ -104,10 +105,6 @@ class MyForm extends React.Component {
     this.setState({ url: event.target.value });
   };
   render() {
-    //<HighlightArticle content={this.state.text} />
-
-          
-
     return (
       <>
       <form onSubmit={this.mySubmitHandler}>
@@ -117,11 +114,9 @@ class MyForm extends React.Component {
           <input type="submit" value="submit" />
           <input id="changeColor" type="button" value="Highlight"/>
           <input id="clear" type="button" value="Clear"/>
-        </form>
-        <div>the url is {this.state.url}</div>
-        <div>the text is<p/> this.text </div>
-        {this.state.text}
-        <HighlightArticle content= {new HighlightArticle(this.state.text)} />
+     </form>
+                
+     <HighlightArticle content={this.state.text} />
         
         
       </>
