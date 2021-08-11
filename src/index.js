@@ -8,7 +8,8 @@ class HighlightArticle extends React.Component
 
   constructor(props) {
     super(props);
-    this.state = { selection: '' }
+    this.state = { selection: '' ,
+                   mainText: ''}
   }
 /*
  * 1. props has the content.
@@ -17,31 +18,36 @@ class HighlightArticle extends React.Component
  * 4. use function highlight in render.
  */
 
-  
+Highlight()
+{
+  const selection = this.state.selection;
+  const start =  this.props.content.search(selection)
+  //console.log(start)
+  const prefix = this.props.content.substring(0, start)
+  //console.log(selection.toString())
+  const hilite = this.props.content.substring(start, start+ selection.toString().length)
+  //console.log(start+selection.length)
+  const suffix = this.props.content.substring(start+selection.toString().length)
+  //console.log(suffix)
+  return (<> {prefix} <b> {hilite} </b> {suffix}</>);
+}
+
+/*
 Highlight() 
 {
   console.log("inside highlight")
   if(this.state.selection !== '')
   {
-    /*
-    return (<>
-              bit before the highlight
-              <b> the highlight </b>
-              bit after the highlight
-            </>
-    )
-    */
+
     
       console.log('if');
-      const mainElement = this.props.content;
-      //console.log(mainElement)
+      const textBody = this.props.content;
       const selection= this.state.selection;
       console.log(selection);
-      const regex=RegExp(selection, 'g')
       const replacement = '<b>'+ selection+'</b>';
       console.log(replacement);
 
-      const newHTML = mainElement.replace(regex, replacement);
+      const newHTML = textBody.replace(selection, replacement);
       return newHTML;
       
     } else {
@@ -49,8 +55,9 @@ Highlight()
       return this.props.content;
     }
 };
-
-  handle_selection() {
+*/
+  handle_selection() 
+  {
     if (this.has_selection()) {
       this.setState({ selection: window.getSelection() })
     }
@@ -121,8 +128,7 @@ class MyForm extends React.Component {
           <p>Enter the url, and submit:</p>
           <input type="text" onChange={this.myChangeHandler} />
           <input type="submit" value="submit" />
-          <input id="changeColor" type="button" value="Highlight"/>
-          <input id="clear" type="button" value="Clear"/>
+          <input id="clear" type="button" value="Clear" />
      </form>
                 
      <HighlightArticle content={this.state.text} />
